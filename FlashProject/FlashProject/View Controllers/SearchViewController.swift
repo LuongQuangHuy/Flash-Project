@@ -263,6 +263,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
             cell.likeButton.likeButtonDelegate = self
             cell.track_title.text = data.title
             cell.artist_album.text = data.artist.name + " " + data.album.title
+            let url = URL(string: data.artist.picture_xl)
+            cell.avatar.kf.setImage(with: url)
             return cell
         case .Artist:
             guard let artists = searchDatasFromAPI.resultComponents?.artists.enumerated() else {return UITableViewCell()}
@@ -272,6 +274,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
                 if index == indexPath.row{
                     cell.artistname.text = artist.name
                     cell.numberOfFans.text = ""
+                    let url = URL(string: artist.picture_xl)
+                    cell.avatar.kf.setImage(with: url)
                 }
             }
             return cell
@@ -283,6 +287,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
                 if index == indexPath.row{
                     cell.albumtitle.text = album.title
                     cell.artistName.text = ""
+                    let url = URL(string: album.cover_xl)
+                    cell.avatar.kf.setImage(with: url)
                 }
             }
             return cell

@@ -20,7 +20,7 @@ struct Artist: Codable{
     
     var id: Int
     var name: String
-    var picture: String
+    var picture_xl: String
     var tracklist: String
     var numberOfFan: Int
     var numberOfAlbum: Int
@@ -28,7 +28,7 @@ struct Artist: Codable{
     enum CodingKeys: String, CodingKey{
         case id
         case name
-        case picture
+        case picture_xl
         case tracklist
         case numberOfFan = "nb_fan"
         case numberOfAlbum = "nb_album"
@@ -39,7 +39,7 @@ struct Album: Codable{
    
     var id: Int
     var title: String
-    var cover: String
+    var cover_xl: String
     var tracklist: String
     var release_date: String
     var numberOfTracks: Int
@@ -48,7 +48,7 @@ struct Album: Codable{
     enum CodingKeys: String, CodingKey{
         case id
         case title
-        case cover
+        case cover_xl
         case tracklist
         case release_date
         case numberOfTracks = "nb_tracks"
@@ -80,7 +80,7 @@ struct Track: Codable{
         }
         var id: Int
         var name: String
-        var picture: String
+        var picture_xl: String
         var tracklist: String
     }
     
@@ -93,7 +93,7 @@ struct Track: Codable{
         }
         var id: Int
         var title: String
-        var cover: String
+        var cover_xl: String
         var tracklist: String
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 class MusicPlayerViewController: UIViewController {
 
     @IBOutlet weak var typeName: UILabel!
@@ -74,7 +75,7 @@ class MusicPlayerViewController: UIViewController {
         menuButtonFrame.layer.borderColor = UIColor.white.cgColor
         
         //layout avatar
-        avatar.layer.cornerRadius = 5.0
+        avatar.layer.cornerRadius = 10.0
     }
     
     func addActionTargetForSubViews(){
@@ -131,6 +132,8 @@ class MusicPlayerViewController: UIViewController {
             self.typeName.text = "Track"
             self.trackName.text = commander.trackList[index].title
             self.trackTitleVersion.text = commander.trackList[index].title_version
+            let url = URL(string: commander.trackList[index].artist.picture_xl)
+            self.avatar.kf.setImage(with: url)
         }else{
             backwardButton.isUserInteractionEnabled = true
             forwardButton.isUserInteractionEnabled = true
