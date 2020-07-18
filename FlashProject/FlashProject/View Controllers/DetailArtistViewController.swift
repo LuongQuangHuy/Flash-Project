@@ -14,16 +14,14 @@ class DetailArtistViewController: UIViewController {
     @IBOutlet weak var artistName: UILabel!
     @IBOutlet weak var numberOfFans: UILabel!
     @IBOutlet weak var likeButtonFrame: UIView!
-    @IBOutlet weak var playArtistMixButton: UIView!
+    @IBOutlet weak var playArtistMixButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    let playButton = UIPlayButton(frame: .zero, originState: .pause, playImageName: "icons8-play-white-50", pauseImageName: "icons8-pause-white-50")
-    let likeButton = UILikeButton(frame: .zero, originState: .liked, unlikeImageName: "icons8-heart-50", likedImageName: "icons8-redheart-50")
+    let likeButton = UILikeButton(frame: .zero, originState: .unlike, unlikeImageName: "icons8-heart-50", likedImageName: "icons8-redheart-50")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableView()
         layoutSubviews()
-        configurePlayAlbumButton()
     }
     
     func registerTableView(){
@@ -31,17 +29,6 @@ class DetailArtistViewController: UIViewController {
     }
     
     func layoutSubviews(){
-        //layout play button
-        playArtistMixButton.addSubview(playButton)
-        playButton.translatesAutoresizingMaskIntoConstraints = false
-        playButton.centerYAnchor.constraint(equalTo: playArtistMixButton.centerYAnchor).isActive = true
-        playButton.leadingAnchor.constraint(equalTo: playArtistMixButton.leadingAnchor, constant: 10).isActive = true
-        playButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        playButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        playArtistMixButton.layer.cornerRadius = 20.0
-        //add delegate play button
-        playButton.playButtonDelegate = self
-        
         //layout like button
         likeButtonFrame.layer.cornerRadius = 20.0
         likeButtonFrame.addSubview(likeButton)
@@ -52,16 +39,19 @@ class DetailArtistViewController: UIViewController {
         likeButton.centerYAnchor.constraint(equalTo: likeButtonFrame.centerYAnchor).isActive = true
         //add delegate like button
         likeButton.likeButtonDelegate = self
+        
+        //layout avatar
+        self.artistAvatar.layer.cornerRadius = 110.0
+        
+        //layout playButton
+        playArtistMixButton.layer.cornerRadius = 20.0
        }
     
-    func configurePlayAlbumButton(){
-        playArtistMixButton.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playAlbumButtonTapped(_:)))
-        playArtistMixButton.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc func playAlbumButtonTapped(_ sender: UILabel){
-        self.playButton.toggle()
+   
+    @IBAction func playArtistMixTapped(_ sender: UIButton) {
+        if let trackList = self.tracklist{
+            MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: trackList)
+        }
     }
 }
 
@@ -71,9 +61,17 @@ extension DetailArtistViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-        cell.likeButton.likeButtonDelegate = self
-        return cell
+        if let data = tracklist?[indexPath.row]{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
+            cell.likeButton.likeButtonDelegate = self
+            cell.track_title.text = data.title
+            cell.artist_album.text = data.artist.name
+            let url = URL(string:data.album?.cover_xl ?? "https://media.idownloadblog.com/wp-content/uploads/2018/03/Apple-Music-icon-003.jpg")
+            cell.avatar.kf.setImage(with: url)
+            return cell
+        }else{
+            return UITableViewCell()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -93,11 +91,11 @@ extension DetailArtistViewController: UITableViewDelegate, UITableViewDataSource
 
 extension DetailArtistViewController: UIPlayButtonDelegate{
     func playButtonTapped() {
-        print("play artist mix")
+        MusicPlayer.shared.play()
     }
     
     func pauseButtonTapped() {
-        print("pause artist mix")
+        MusicPlayer.shared.pause()
     }
     
     

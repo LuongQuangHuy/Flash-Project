@@ -69,7 +69,7 @@ struct Track: Codable{
     var title_version: String?
     var preview: String
     var artist: Artist
-    var album: Album
+    var album: Album?
     
     struct Artist: Codable, Hashable{
         static func ==(lhs: Artist, rhs: Artist) -> Bool{
@@ -80,7 +80,7 @@ struct Track: Codable{
         }
         var id: Int
         var name: String
-        var picture_xl: String
+        var picture_xl: String?
         var tracklist: String
     }
     
@@ -97,3 +97,4 @@ struct Track: Codable{
         var tracklist: String
     }
 }
+

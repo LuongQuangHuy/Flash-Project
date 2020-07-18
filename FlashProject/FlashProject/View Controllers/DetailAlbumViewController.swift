@@ -10,20 +10,19 @@ import UIKit
 
 class DetailAlbumViewController: UIViewController {
     var trackList: [Track]?
+    var albumId: Int!
     @IBOutlet weak var albumAvatar: UIImageView!
     @IBOutlet weak var albumTitle: UILabel!
     @IBOutlet weak var byArtists: UILabel!
-    @IBOutlet weak var playAlbumButton: UIView!
+    @IBOutlet weak var playAlbumButton: UIButton!
     @IBOutlet weak var likeButtonFrame: UIView!
     @IBOutlet weak var tableView: UITableView!
-    let playButton = UIPlayButton(frame: .zero, originState: .pause, playImageName: "icons8-play-white-50", pauseImageName: "icons8-pause-white-50")
-    let likeButton = UILikeButton(frame: .zero, originState: .liked, unlikeImageName: "icons8-heart-50", likedImageName: "icons8-redheart-50")
+    let likeButton = UILikeButton(frame: .zero, originState: .unlike, unlikeImageName: "icons8-heart-50", likedImageName: "icons8-redheart-50")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableView()
         layoutSubviews()
-        configurePlayAlbumButton()
     }
     
     func registerTableView(){
@@ -31,17 +30,6 @@ class DetailAlbumViewController: UIViewController {
     }
     
     func layoutSubviews(){
-        // layout play button
-        playAlbumButton.addSubview(playButton)
-        playButton.translatesAutoresizingMaskIntoConstraints = false
-        playButton.centerYAnchor.constraint(equalTo: playAlbumButton.centerYAnchor).isActive = true
-        playButton.leadingAnchor.constraint(equalTo: playAlbumButton.leadingAnchor, constant: 10).isActive = true
-        playButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        playButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        playAlbumButton.layer.cornerRadius = 20.0
-        //add delegate play button
-        playButton.playButtonDelegate = self
-        
         //layout like button
         likeButtonFrame.layer.cornerRadius = 20.0
         likeButtonFrame.addSubview(likeButton)
@@ -52,32 +40,45 @@ class DetailAlbumViewController: UIViewController {
         likeButton.centerYAnchor.constraint(equalTo: likeButtonFrame.centerYAnchor).isActive = true
         // add delegate like button
         likeButton.likeButtonDelegate = self
+    
+        //layout avatar
+        self.albumAvatar.layer.cornerRadius = 11.0
+        
+        //layout play button
+        playAlbumButton.layer.cornerRadius = 20.0
+        
     }
     
-    func configurePlayAlbumButton(){
-        playAlbumButton.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playAlbumButtonTapped(_:)))
-        playAlbumButton.addGestureRecognizer(tapGesture)
-    }
     
-    @objc func playAlbumButtonTapped(_ sender: UILabel){
-        self.playButton.toggle()
-        if let tracklist = self.trackList{
-            MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: tracklist)
+    @IBAction func playAlbumTapped(_ sender: UIButton) {
+        if let trackList = self.trackList{
+            MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: trackList)
         }
     }
 }
 
 extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.trackList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-        cell.likeButton.likeButtonDelegate = self
-        
-        return cell
+        if let data = self.trackList?[indexPath.row]{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
+            cell.likeButton.likeButtonDelegate = self
+            cell.track_title.text = data.title
+            cell.artist_album.text = data.artist.name
+            let url = URL(string: data.album?.cover_xl ?? "https://media.idownloadblog.com/wp-content/uploads/2018/03/Apple-Music-icon-003.jpg")
+            cell.avatar.kf.setImage(with: url)
+            return cell
+        }else{
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let track = self.trackList?[indexPath.row] else{return}
+        MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: [track])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -92,16 +93,6 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
         header.headerTitle.text = "Album tracks"
         header.headerDescription.text = ""
         return header as UIView
-    }
-}
-
-extension DetailAlbumViewController: UIPlayButtonDelegate{
-    func playButtonTapped() {
-        print("play album")
-    }
-    
-    func pauseButtonTapped() {
-        print("pause album")
     }
 }
 

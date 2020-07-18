@@ -183,6 +183,7 @@ class SearchViewController: UIViewController {
                 guard let strongSelf = self else {return}
                 strongSelf.loadingView.removeFromSuperview()
                 strongSelf.layoutSearchResultsView()
+                strongSelf.tableView.reloadData()
                 
             }
         }
@@ -262,8 +263,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
             let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
             cell.likeButton.likeButtonDelegate = self
             cell.track_title.text = data.title
-            cell.artist_album.text = data.artist.name + " " + data.album.title
-            let url = URL(string: data.artist.picture_xl)
+            cell.artist_album.text = data.artist.name + " - " + data.album!.title
+            let url = URL(string: data.album!.cover_xl)
             cell.avatar.kf.setImage(with: url)
             return cell
         case .Artist:
@@ -274,7 +275,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
                 if index == indexPath.row{
                     cell.artistname.text = artist.name
                     cell.numberOfFans.text = ""
-                    let url = URL(string: artist.picture_xl)
+                    let url = URL(string: artist.picture_xl!)
                     cell.avatar.kf.setImage(with: url)
                 }
             }
@@ -308,8 +309,16 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
             for (index, artist) in resultComponents.artists.enumerated(){
                 if index == indexPath.row{
                     let artistVC = storyboard?.instantiateViewController(withIdentifier: "DetailArtistViewController") as! DetailArtistViewController
+                    artistVC.loadView()
+                    artistVC.viewDidLoad()
+                    let getArtistTracks = CommunicateWithAPI()
+                    getArtistTracks.getTrackListByLink(link: artist.tracklist) {
+                        artistVC.tracklist = getArtistTracks.trackList
+                        artistVC.tableView.reloadData()
+                    }
                     artistVC.artistName.text = artist.name
                     artistVC.numberOfFans.text = ""
+                    artistVC.artistAvatar.kf.setImage(with: URL(string: artist.picture_xl!))
                     self.navigationController?.pushViewController(artistVC, animated: true)
                 }
             }
@@ -317,8 +326,17 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
             for(index, album) in resultComponents.albums.enumerated(){
                 if index == indexPath.row{
                     let albumVC = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as! DetailAlbumViewController
+                    albumVC.loadView()
+                    albumVC.viewDidLoad()
+                    let getAlbumTracks = CommunicateWithAPI()
+                    getAlbumTracks.getTrackListByLink(link: album.tracklist) {
+                        albumVC.trackList = getAlbumTracks.trackList
+                        albumVC.tableView.reloadData()
+                    }
                     albumVC.albumTitle.text = album.title
                     albumVC.byArtists.text = ""
+                    albumVC.albumId = album.id
+                    albumVC.albumAvatar.kf.setImage(with: URL(string: album.cover_xl))
                     self.navigationController?.pushViewController(albumVC, animated: true)
                 }
             }

@@ -42,7 +42,7 @@ class CommunicateWithAPI{
                 self?.resultComponents = ResultComponents()
                 self?.resultComponents?.tracks = searchResult.data
                 for track in searchResult.data{
-                    self?.resultComponents?.albums.insert(track.album)
+                    self?.resultComponents?.albums.insert(track.album!)
                     self?.resultComponents?.artists.insert(track.artist)
                 }
                 DispatchQueue.main.async {
@@ -140,7 +140,8 @@ class CommunicateWithAPI{
                           }
                           guard let data = data, let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else{return}
                           do{
-                               self?.trackList = try JSONDecoder().decode([Track].self, from: data)
+                            let result = try JSONDecoder().decode(SearchResult.self, from: data)
+                            self?.trackList = result.data
                                DispatchQueue.main.async {
                                    completionHander()
                                }

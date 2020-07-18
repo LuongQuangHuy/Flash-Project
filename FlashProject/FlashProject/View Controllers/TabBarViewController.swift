@@ -43,7 +43,7 @@ class TabBarViewController: UITabBarController{
     
     let progressBar: UIProgressView = {
         let progress = UIProgressView()
-        progress.progressTintColor = .link
+        progress.progressTintColor = .systemOrange
         progress.trackTintColor = .lightGray
         progress.progress = 0.5
         return progress

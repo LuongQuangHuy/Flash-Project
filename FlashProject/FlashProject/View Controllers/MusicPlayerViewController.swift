@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 class MusicPlayerViewController: UIViewController {
 
+    @IBOutlet weak var currentIndex: UILabel!
     @IBOutlet weak var typeName: UILabel!
     @IBOutlet weak var artistName: UILabel!
     @IBOutlet weak var trackName: UILabel!
@@ -123,24 +124,25 @@ class MusicPlayerViewController: UIViewController {
     
     func reloadDataInSubViews(){
         let index = commander.index
-        if commander.trackList.count <= 1{
-            backwardButton.isUserInteractionEnabled = false
-            backwardButton.alpha = 0.5
-            forwardButton.isUserInteractionEnabled = false
-            forwardButton.alpha = 0.5
+        if let audio = commander.audioPlayer, audio.isPlaying{
             self.artistName.text = commander.trackList[index].artist.name
             self.typeName.text = "Track"
             self.trackName.text = commander.trackList[index].title
             self.trackTitleVersion.text = commander.trackList[index].title_version
-            let url = URL(string: commander.trackList[index].artist.picture_xl)
+            self.currentIndex.text = String("\(commander.index + 1) / \(commander.trackList.count)")
+            let url = URL(string: commander.trackList[index].album?.cover_xl ?? "https://media.idownloadblog.com/wp-content/uploads/2018/03/Apple-Music-icon-003.jpg")
             self.avatar.kf.setImage(with: url)
-        }else{
-            backwardButton.isUserInteractionEnabled = true
-            forwardButton.isUserInteractionEnabled = true
-            self.artistName.text = commander.trackList[index].artist.name
-            self.typeName.text = "Track"
-            self.trackName.text = commander.trackList[index].title
-            self.trackTitleVersion.text = commander.trackList[index].title_version
+            if commander.trackList.count <= 1{
+                backwardButton.isUserInteractionEnabled = false
+                backwardButton.alpha = 0.5
+                forwardButton.isUserInteractionEnabled = false
+                forwardButton.alpha = 0.5
+            }else{
+                backwardButton.isUserInteractionEnabled = true
+                forwardButton.isUserInteractionEnabled = true
+                backwardButton.alpha = 1.0
+                forwardButton.alpha = 1.0
+            }
         }
     }
        
