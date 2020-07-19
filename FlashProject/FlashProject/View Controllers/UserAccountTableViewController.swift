@@ -13,7 +13,7 @@ class UserAccountTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = false
-        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .done, target: self, action: nil)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,7 +64,7 @@ class UserAccountTableViewController: UITableViewController {
     @objc func logOutButtonTapped(){
         let alert = UIAlertController(title: "Are you sure want to log out?", message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .destructive) { (_) in
-            self.dismiss(animated: false, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alert.addAction(okAction)

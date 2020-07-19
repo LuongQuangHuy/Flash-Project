@@ -10,44 +10,43 @@ import UIKit
 import AVFoundation
 class TabBarViewController: UITabBarController{
     
-    let minimizeMusicPlayerView = UIView()
-    
-    let playButton = UIPlayButton(frame: .zero, originState: .pause, playImageName: "icons8-play-white-50", pauseImageName: "icons8-pause-white-50")
-    
+    let minimizeMusicPlayerView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemPurple
+        return view
+    }()
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 5
         return stackView
     }()
-    
     let trackName: UILabel = {
         let track = UILabel()
-        track.textColor = .white
+        track.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         track.text = "Track title"
+        track.textColor = .white
         return track
     }()
-    
     let artistName: UILabel = {
         let artist = UILabel()
         artist.textColor = .white
         artist.text = "Artist"
         return artist
     }()
-    
     let cancelButton : UIButton = {
         let cancel = UIButton()
         cancel.setImage(UIImage(named: "icons8-cancel-32"), for: .normal)
         return cancel
     }()
-    
     let progressBar: UIProgressView = {
         let progress = UIProgressView()
-        progress.progressTintColor = .systemOrange
-        progress.trackTintColor = .lightGray
+        progress.progressTintColor = .white
+        progress.trackTintColor = .systemPurple
         progress.progress = 0.5
         return progress
     }()
+    let playButton = UIPlayButton(frame: .zero, originState: .pause, playImageName: "icons8-play-white-50", pauseImageName: "icons8-pause-white-50")
     
     unowned let commander = MusicPlayer.shared
     var musicPlayerVC: MusicPlayerViewController!
@@ -78,7 +77,6 @@ class TabBarViewController: UITabBarController{
         // layout minimize music player view
         view.addSubview(minimizeMusicPlayerView)
         minimizeMusicPlayerView.translatesAutoresizingMaskIntoConstraints = false
-        minimizeMusicPlayerView.backgroundColor = .darkGray
         minimizeMusicPlayerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -49).isActive = true
         minimizeMusicPlayerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         minimizeMusicPlayerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
@@ -114,10 +112,10 @@ class TabBarViewController: UITabBarController{
         //layout progress view
         minimizeMusicPlayerView.addSubview(progressBar)
         progressBar.translatesAutoresizingMaskIntoConstraints = false
-        progressBar.leadingAnchor.constraint(equalTo: minimizeMusicPlayerView.leadingAnchor, constant: 2).isActive = true
-        progressBar.trailingAnchor.constraint(equalTo: minimizeMusicPlayerView.trailingAnchor, constant: -2).isActive = true
+        progressBar.leadingAnchor.constraint(equalTo: minimizeMusicPlayerView.leadingAnchor).isActive = true
+        progressBar.trailingAnchor.constraint(equalTo: minimizeMusicPlayerView.trailingAnchor).isActive = true
         progressBar.bottomAnchor.constraint(equalTo: minimizeMusicPlayerView.bottomAnchor).isActive = true
-        progressBar.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        progressBar.heightAnchor.constraint(equalToConstant: 4).isActive = true
     }
     
     func addTargetForMiniViewButtons(){
@@ -150,11 +148,6 @@ class TabBarViewController: UITabBarController{
         NotificationCenter.default.addObserver(self, selector: #selector(musicIsPlaying), name: postPlaying, object: commander)
         let postPause = Notification.Name.init(rawValue: "MusicOnPause")
         NotificationCenter.default.addObserver(self, selector: #selector(musicOnPause), name: postPause, object: commander)
-    }
-    
-    func resetDataInSubViews(){
-        self.trackName.text = ""
-        self.artistName.text = ""
     }
     
     func reloadDataInSubviews(){

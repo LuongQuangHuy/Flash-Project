@@ -31,15 +31,9 @@ class DetailMPmenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = Bundle.main.loadNibNamed("TrackSearchResultCell", owner: self, options: nil)?.first as! TrackSearchResultCell
         header.likeButton.removeFromSuperview()
-        header.contentView.backgroundColor = UIColor.white
-        let bottomLine = UIView()
-        bottomLine.backgroundColor = .lightGray
-        header.addSubview(bottomLine)
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        bottomLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        bottomLine.leadingAnchor.constraint(equalTo: header.leadingAnchor).isActive = true
-        bottomLine.trailingAnchor.constraint(equalTo: header.trailingAnchor).isActive = true
-        bottomLine.bottomAnchor.constraint(equalTo: header.bottomAnchor).isActive = true
+        header.track_title.textColor = .white
+        header.artist_album.textColor = .white
+        header.contentView.backgroundColor = UIColor.systemPurple
         return header
     }
     

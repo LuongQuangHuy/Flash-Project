@@ -72,10 +72,14 @@ class MusicPlayerViewController: UIViewController {
         
         //layout border for menu button frame
         menuButtonFrame.layer.cornerRadius = 25.0
-        menuButtonFrame.layer.borderWidth = 1
+        menuButtonFrame.layer.borderWidth = 2
         menuButtonFrame.layer.borderColor = UIColor.white.cgColor
         
         //layout avatar
+        avatar.layer.masksToBounds = false
+        avatar.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
+        avatar.layer.shadowOpacity = 0.5
+        avatar.layer.shadowRadius = 10.0
         avatar.layer.cornerRadius = 10.0
     }
     
@@ -130,12 +134,22 @@ class MusicPlayerViewController: UIViewController {
             self.trackName.text = commander.trackList[index].title
             self.trackTitleVersion.text = commander.trackList[index].title_version
             self.currentIndex.text = String("\(commander.index + 1) / \(commander.trackList.count)")
-            let url = URL(string: commander.trackList[index].album?.cover_xl ?? "https://media.idownloadblog.com/wp-content/uploads/2018/03/Apple-Music-icon-003.jpg")
+            let url = URL(string: commander.trackList[index].album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
             self.avatar.kf.setImage(with: url)
             if commander.trackList.count <= 1{
                 backwardButton.isUserInteractionEnabled = false
-                backwardButton.alpha = 0.5
                 forwardButton.isUserInteractionEnabled = false
+                backwardButton.alpha = 0.5
+                forwardButton.alpha = 0.5
+            }else if commander.index == 0{
+                backwardButton.isUserInteractionEnabled = false
+                forwardButton.isUserInteractionEnabled = true
+                backwardButton.alpha = 0.5
+                forwardButton.alpha = 1.0
+            }else if commander.index == commander.trackList.count - 1{
+                backwardButton.isUserInteractionEnabled = true
+                forwardButton.isUserInteractionEnabled = false
+                backwardButton.alpha = 1.0
                 forwardButton.alpha = 0.5
             }else{
                 backwardButton.isUserInteractionEnabled = true

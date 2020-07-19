@@ -11,11 +11,6 @@ import UIKit
 class DetailAlbumViewController: UIViewController {
     var trackList: [Track]?
     var albumId: Int!
-    @IBOutlet weak var albumAvatar: UIImageView!
-    @IBOutlet weak var albumTitle: UILabel!
-    @IBOutlet weak var byArtists: UILabel!
-    @IBOutlet weak var playAlbumButton: UIButton!
-    @IBOutlet weak var likeButtonFrame: UIView!
     @IBOutlet weak var tableView: UITableView!
     let likeButton = UILikeButton(frame: .zero, originState: .unlike, unlikeImageName: "icons8-heart-50", likedImageName: "icons8-redheart-50")
     
@@ -30,30 +25,8 @@ class DetailAlbumViewController: UIViewController {
     }
     
     func layoutSubviews(){
-        //layout like button
-        likeButtonFrame.layer.cornerRadius = 20.0
-        likeButtonFrame.addSubview(likeButton)
-        likeButton.translatesAutoresizingMaskIntoConstraints = false
-        likeButton.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        likeButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        likeButton.centerXAnchor.constraint(equalTo: likeButtonFrame.centerXAnchor).isActive = true
-        likeButton.centerYAnchor.constraint(equalTo: likeButtonFrame.centerYAnchor).isActive = true
-        // add delegate like button
-        likeButton.likeButtonDelegate = self
-    
-        //layout avatar
-        self.albumAvatar.layer.cornerRadius = 11.0
+      
         
-        //layout play button
-        playAlbumButton.layer.cornerRadius = 20.0
-        
-    }
-    
-    
-    @IBAction func playAlbumTapped(_ sender: UIButton) {
-        if let trackList = self.trackList{
-            MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: trackList)
-        }
     }
 }
 
@@ -68,7 +41,7 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
             cell.likeButton.likeButtonDelegate = self
             cell.track_title.text = data.title
             cell.artist_album.text = data.artist.name
-            let url = URL(string: data.album?.cover_xl ?? "https://media.idownloadblog.com/wp-content/uploads/2018/03/Apple-Music-icon-003.jpg")
+            let url = URL(string: data.album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
             cell.avatar.kf.setImage(with: url)
             return cell
         }else{

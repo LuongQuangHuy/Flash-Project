@@ -43,7 +43,7 @@ class MadeForUserViewController: UIViewController {
     }
     
     func configureThemes(){
-        themes.append(SectionInfo(type: .MusicAlbumView , title: "Latest albums release", description: "According to your favorite artists", numberOfrowInSection: 1 , heightForRowInSection: 580.0))
+        themes.append(SectionInfo(type: .MusicAlbumView , title: "Latest albums release", description: "According to your favorite artists", numberOfrowInSection: 1 , heightForRowInSection: 570.0))
         themes.append(SectionInfo(type: .Track , title: "10 latest tracks release", description: "According to your favorite artists", numberOfrowInSection: 10 , heightForRowInSection: 80.0))
     }
     

@@ -13,7 +13,11 @@ class Caculating{
     func doubleToMiniute(double: Double) -> String{
         let miniute = Int(double) / 60
         let second = Int(double) % 60
-        return "\(miniute):\(second)"
+        if second <= 9{
+            return "\(miniute):0\(second)"
+        }else{
+            return "\(miniute):\(second)"
+        }
     }
     private init(){}
 }

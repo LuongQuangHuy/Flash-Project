@@ -32,11 +32,11 @@ class LoginViewController: UIViewController {
     @IBAction func loginTapped(_ sender: Any) {
         guard let tabBarVC = storyboard?.instantiateViewController(identifier: "TabBarViewController") else {return}
         tabBarVC.modalPresentationStyle = .fullScreen
-        present(tabBarVC, animated: false, completion: nil)
+        present(tabBarVC, animated: true, completion: nil)
     }
     @IBAction func registerTapped(_ sender: Any) {
         guard let registerVC = storyboard?.instantiateViewController(withIdentifier: "Register Screen") else {return}
         registerVC.modalPresentationStyle = .fullScreen
-        present(registerVC, animated: true, completion: nil)
+        present(registerVC, animated: false, completion: nil)
     }
 }

@@ -218,15 +218,15 @@
 				2818900224B38B0A008C0447 /* FavoritesViewController.swift */,
 				28EC64D024B929F000EDA28D /* FavoriteTracksViewController.swift */,
 				28EC64D624B92A8700EDA28D /* AlbumsViewController.swift */,
-				28EC64DC24B93E5800EDA28D /* DetailAlbumViewController.swift */,
 				28EC64D824B92AC900EDA28D /* ArtistsViewController.swift */,
+				28EC64DC24B93E5800EDA28D /* DetailAlbumViewController.swift */,
 				28EC64DA24B93E3800EDA28D /* DetailArtistViewController.swift */,
-				28BBFCB924BCA10A0072B4E2 /* UserAccountTableViewController.swift */,
-				28BBFCBB24BCAE690072B4E2 /* ManageAccountTableViewController.swift */,
-				28EB7B6524BE9F000046B172 /* DetailMPmenuTableViewController.swift */,
 				2818900024B38AE8008C0447 /* SearchViewController.swift */,
 				2818902224B3A4CF008C0447 /* TabBarViewController.swift */,
 				28EB7B6324BE8F660046B172 /* MusicPlayerViewController.swift */,
+				28EB7B6524BE9F000046B172 /* DetailMPmenuTableViewController.swift */,
+				28BBFCB924BCA10A0072B4E2 /* UserAccountTableViewController.swift */,
+				28BBFCBB24BCAE690072B4E2 /* ManageAccountTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -602,7 +602,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lqh.FlashProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -620,7 +620,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lqh.FlashProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

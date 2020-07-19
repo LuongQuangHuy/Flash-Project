@@ -164,6 +164,7 @@ class SearchViewController: UIViewController {
         //configure table view
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
     }
     
     // SEARCH BUTTON TAPPED
@@ -191,6 +192,7 @@ class SearchViewController: UIViewController {
     
 }
 
+//COLLECTION VIEW
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.navigateItems.count
@@ -200,14 +202,16 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchNavigateCell", for: indexPath) as! SearchNavigateCell
         let data = navigateItems[indexPath.item]
         cell.label.text = data.title
+        cell.layer.borderWidth = 1.0
+        cell.layer.cornerRadius = 15.0
         if data.type == self.typeState{
-            cell.backgroundColor = UIColor.darkGray
-            cell.label.textColor = .lightText
-            cell.layer.borderColor = UIColor.systemGroupedBackground.cgColor
+            cell.backgroundColor = UIColor.systemPurple
+            cell.label.textColor = .white
+            cell.layer.borderColor = UIColor.white.cgColor
         }else{
-            cell.backgroundColor = UIColor.systemBackground
-            cell.label.textColor = .darkGray
-            cell.layer.borderColor = UIColor.darkGray.cgColor
+            cell.backgroundColor = UIColor.white
+            cell.label.textColor = .systemPurple
+            cell.layer.borderColor = UIColor.systemPurple.cgColor
         }
         return cell
     }
@@ -238,7 +242,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
 }
-
+//TABLE VIEW
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let resultComponents = self.searchDatasFromAPI.resultComponents else {return 0}
@@ -316,9 +320,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
                         artistVC.tracklist = getArtistTracks.trackList
                         artistVC.tableView.reloadData()
                     }
-                    artistVC.artistName.text = artist.name
-                    artistVC.numberOfFans.text = ""
-                    artistVC.artistAvatar.kf.setImage(with: URL(string: artist.picture_xl!))
                     self.navigationController?.pushViewController(artistVC, animated: true)
                 }
             }
@@ -333,10 +334,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
                         albumVC.trackList = getAlbumTracks.trackList
                         albumVC.tableView.reloadData()
                     }
-                    albumVC.albumTitle.text = album.title
-                    albumVC.byArtists.text = ""
-                    albumVC.albumId = album.id
-                    albumVC.albumAvatar.kf.setImage(with: URL(string: album.cover_xl))
                     self.navigationController?.pushViewController(albumVC, animated: true)
                 }
             }
