@@ -265,7 +265,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
         case .Track:
             guard let data = searchDatasFromAPI.resultComponents?.tracks[indexPath.row] else {return UITableViewCell()}
             let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-            cell.likeButton.likeButtonDelegate = self
             cell.track_title.text = data.title
             cell.artist_album.text = data.artist.name + " - " + data.album!.title
             let url = URL(string: data.album!.cover_xl)
@@ -274,7 +273,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
         case .Artist:
             guard let artists = searchDatasFromAPI.resultComponents?.artists.enumerated() else {return UITableViewCell()}
             let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell") as! ArtistSearchResultCell
-            cell.likeButton.likeButtonDelegate = self
             for (index, artist) in artists{
                 if index == indexPath.row{
                     cell.artistname.text = artist.name
@@ -287,7 +285,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
         case .Album:
             guard let albums = searchDatasFromAPI.resultComponents?.albums.enumerated() else {return UITableViewCell()}
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell") as! AlbumSearchResultCell
-            cell.likeButton.likeButtonDelegate = self
             for (index, album) in albums{
                 if index == indexPath.row{
                     cell.albumtitle.text = album.title
@@ -347,17 +344,5 @@ extension SearchViewController: UISearchBarDelegate{
         self.resultsView.removeFromSuperview()
         searchBar.resignFirstResponder()
     }
-    
-}
-
-extension SearchViewController: UILikeButtonDelegate{
-    func likeButtonTapped() {
-        print("like a search result")
-    }
-    
-    func unlikeButtonTapped() {
-        print("dislike a search result")
-    }
-    
     
 }

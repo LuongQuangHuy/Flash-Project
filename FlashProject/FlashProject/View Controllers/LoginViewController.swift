@@ -32,6 +32,8 @@ class LoginViewController: UIViewController {
     @IBAction func loginTapped(_ sender: Any) {
         guard let tabBarVC = storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else {return}
         tabBarVC.modalPresentationStyle = .fullScreen
+        UserData.shared.userInfo = UserData.UserInfo(name: "Luong Quang Huy", email: "quanghuy0606999@gmail.com", userID: "1234567890", userPassword: "LuongQuanggHuy")
+        UserData.shared.userStoreData = UserData.UserStoredData(likedTrackIds: [], likedAlbumIds: [], likedArtistIds: [], historyTrackIds: [])
         present(tabBarVC, animated: true, completion: nil)
     }
     @IBAction func registerTapped(_ sender: Any) {

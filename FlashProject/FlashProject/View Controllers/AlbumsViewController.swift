@@ -34,7 +34,6 @@ extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell") as! AlbumSearchResultCell
-        cell.likeButton.likeButtonDelegate = self
         guard let albumID = UserData.shared.userStoreData?.userLikedAlbumIDs[indexPath.row] else {return UITableViewCell()}
         let getAlbumByID = CommunicateWithAPI()
         getAlbumByID.getAlbumById(id: albumID){
@@ -64,14 +63,3 @@ extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate{
     
 }
 
-extension AlbumsViewController: UILikeButtonDelegate{
-    func likeButtonTapped() {
-        print("like an album")
-    }
-    
-    func unlikeButtonTapped() {
-        print("dislike an album")
-    }
-    
-    
-}

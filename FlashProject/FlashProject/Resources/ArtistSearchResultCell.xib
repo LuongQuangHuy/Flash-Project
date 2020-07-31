@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                <rect key="frame" x="0.0" y="0.0" width="328" height="85.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Warframe" translatesAutoresizingMaskIntoConstraints="NO" id="0vq-xW-KBT">
@@ -24,7 +27,7 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="TLi-6s-Ypc">
-                        <rect key="frame" x="90" y="17" width="110.5" height="52.5"/>
+                        <rect key="frame" x="90" y="16.5" width="110.5" height="52.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wwl-iV-upr">
                                 <rect key="frame" x="0.0" y="0.0" width="110.5" height="20.5"/>
@@ -46,6 +49,7 @@
                     <constraint firstItem="TLi-6s-Ypc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Pvv-O7-Eiz"/>
                     <constraint firstItem="0vq-xW-KBT" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="S39-mK-f7Q"/>
                     <constraint firstItem="TLi-6s-Ypc" firstAttribute="leading" secondItem="0vq-xW-KBT" secondAttribute="trailing" constant="10" id="dbB-t2-7ri"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TLi-6s-Ypc" secondAttribute="trailing" constant="20" id="o6f-rZ-aWp"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

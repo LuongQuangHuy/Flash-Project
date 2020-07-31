@@ -36,6 +36,7 @@ class MadeForUserViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.separatorStyle = .none
         configureThemes()
         configureNavigationBar()
         tableviewRegister()
@@ -95,7 +96,6 @@ extension MadeForUserViewController: UITableViewDelegate, UITableViewDataSource{
         switch themes[indexPath.section].type {
         case .Track:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-            cell.likeButton.likeButtonDelegate = self
             return cell
         case .MusicAlbumView:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumsView") as! MusicCollectionView

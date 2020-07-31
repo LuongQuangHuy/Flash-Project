@@ -30,7 +30,6 @@ class DetailMPmenuTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = Bundle.main.loadNibNamed("TrackSearchResultCell", owner: self, options: nil)?.first as! TrackSearchResultCell
-        header.likeButton.removeFromSuperview()
         header.track_title.textColor = .white
         header.artist_album.textColor = .white
         header.contentView.backgroundColor = UIColor.purple

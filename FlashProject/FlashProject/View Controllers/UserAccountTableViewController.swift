@@ -64,6 +64,8 @@ class UserAccountTableViewController: UITableViewController {
     @objc func logOutButtonTapped(){
         let alert = UIAlertController(title: "Are you sure want to log out?", message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .destructive) { (_) in
+            UserData.shared.userInfo = nil
+            UserData.shared.userStoreData = nil
             self.dismiss(animated: true, completion: nil)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)

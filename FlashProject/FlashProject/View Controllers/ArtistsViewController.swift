@@ -33,7 +33,6 @@ extension ArtistsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell") as! ArtistSearchResultCell
-        cell.likeButton.likeButtonDelegate = self
         guard let artistID = UserData.shared.userStoreData?.userLikedArtistIDs[indexPath.row] else {return UITableViewCell()}
         let getArtistByID = CommunicateWithAPI()
         getArtistByID.getAlbumById(id: artistID){
@@ -64,14 +63,3 @@ extension ArtistsViewController: UITableViewDataSource, UITableViewDelegate{
     
 }
 
-extension ArtistsViewController: UILikeButtonDelegate{
-    func likeButtonTapped() {
-        print("like an artist")
-    }
-    
-    func unlikeButtonTapped() {
-        print("dislike an artist")
-    }
-    
-    
-}

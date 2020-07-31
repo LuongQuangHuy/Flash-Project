@@ -71,13 +71,39 @@ class UserData{
         self.userStoreData?.userLikedArtistIDs.insert(id, at: 0)
     }
     
+    func removefavoriteTrackById(id: Int){
+        if let trackIds = self.userStoreData?.userLikedTrackIDs{
+            for (index,_) in trackIds.enumerated(){
+                if trackIds[index] == id{
+                   self.userStoreData?.userLikedTrackIDs.remove(at: index)
+                }
+            }
+        }
+    }
+    
+    func removefavoriteAlbumById(id: Int){
+        if let albumIds = self.userStoreData?.userLikedAlbumIDs{
+            for (index,_) in albumIds.enumerated(){
+                if albumIds[index] == id{
+                    self.userStoreData?.userLikedAlbumIDs.remove(at: index)
+                }
+            }
+        }
+    }
+    
+    func removefavoriteArtistById(id: Int){
+        if let artistIds = self.userStoreData?.userLikedArtistIDs{
+            for (index,_) in artistIds.enumerated(){
+                if artistIds[index] == id{
+                    self.userStoreData?.userLikedArtistIDs.remove(at: index)
+                }
+            }
+        }
+    }
+    
     func addHistoryTrackId(id: Int){
-        guard var historyTrackIDs = userStoreData?.historyTrackIDs else {return}
-        if historyTrackIDs.count >= 10{
-            historyTrackIDs.removeLast()
-            historyTrackIDs.insert(id, at: 0)
-        }else{
-            historyTrackIDs.insert(id, at: 0)
+        if let _ = self.userStoreData?.historyTrackIDs{
+            self.userStoreData?.historyTrackIDs.insert(id, at: 0)
         }
     }
     

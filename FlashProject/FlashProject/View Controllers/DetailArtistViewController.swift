@@ -55,7 +55,6 @@ extension DetailArtistViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.section == 1{
             if let data = trackList?[indexPath.row]{
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-                cell.likeButton.likeButtonDelegate = self
                 cell.track_title.text = data.title
                 cell.artist_album.text = data.artist.name
                 let url = URL(string:data.album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")

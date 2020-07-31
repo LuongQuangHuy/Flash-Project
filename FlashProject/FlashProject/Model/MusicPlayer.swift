@@ -36,7 +36,7 @@ class MusicPlayer{
     
     private func startPlayingCurrentTrack(){
             let request = URLRequest(url: URL(string: trackList[index].preview)!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
-            self.task = URLSession.shared.downloadTask(with: request) { [weak self](url, response, error) in
+            self.task = URLSession.shared.downloadTask(with: request) { [weak self, weak userData = UserData.shared](url, response, error) in
                 guard let strongSelf = self else {return}
                 if let error = error{
                     print(error.localizedDescription)
@@ -46,6 +46,8 @@ class MusicPlayer{
                         strongSelf.audioPlayer = try AVAudioPlayer(contentsOf: url)
                         strongSelf.audioPlayer?.prepareToPlay()
                         strongSelf.play()
+                        let id = strongSelf.trackList[strongSelf.index].id
+                        userData?.addHistoryTrackId(id: id)
                     }catch{
                         print(error)
                     }

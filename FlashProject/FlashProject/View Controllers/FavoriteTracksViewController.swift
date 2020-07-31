@@ -10,9 +10,9 @@ import UIKit
 
 class FavoriteTracksViewController: UIViewController {
     var tracks : [Track?] = []
-   
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         configureNavigationBar()
         registerTableView()
@@ -36,7 +36,6 @@ extension FavoriteTracksViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-        cell.likeButton.likeButtonDelegate = self
         guard let trackID = UserData.shared.userStoreData?.userLikedTrackIDs[indexPath.row] else {return UITableViewCell()}
         let getTrackByID = CommunicateWithAPI()
         getTrackByID.getTrackById(id: trackID) {
@@ -66,14 +65,3 @@ extension FavoriteTracksViewController: UITableViewDataSource, UITableViewDelega
     
 }
 
-extension FavoriteTracksViewController: UILikeButtonDelegate{
-    func likeButtonTapped() {
-        print("like an album")
-    }
-    
-    func unlikeButtonTapped() {
-        print("dislike an album")
-    }
-    
-    
-}

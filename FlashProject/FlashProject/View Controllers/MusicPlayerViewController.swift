@@ -47,6 +47,15 @@ class MusicPlayerViewController: UIViewController {
                 self.slider.maximumValue = 0.0
                 self.slider.maximumValue = Float(audioPlayer.duration)
                 self.slider.value = Float(audioPlayer.currentTime)
+                if let trackIDs = UserData.shared.userStoreData?.userLikedTrackIDs{
+                    for id in trackIDs{
+                        if self.commander.trackList[self.commander.index].id == id{
+                            self.likeButton.updateButtonByState(state: .liked)
+                        }else{
+                            self.likeButton.updateButtonByState(state: .unlike)
+                        }
+                    }
+                }
             }
         }
     }
@@ -86,9 +95,9 @@ class MusicPlayerViewController: UIViewController {
     
     func addActionTargetForSubViews(){
         // add action for menu button
-        menuButton.isUserInteractionEnabled = true
-        let menuTapGesture = UITapGestureRecognizer(target: self, action: #selector(menuTapResponse))
-        menuButton.addGestureRecognizer(menuTapGesture)
+//        menuButton.isUserInteractionEnabled = true
+//        let menuTapGesture = UITapGestureRecognizer(target: self, action: #selector(menuTapResponse))
+//        menuButton.addGestureRecognizer(menuTapGesture)
         
         //add action for backward button
         let backwardTapGesture = UITapGestureRecognizer(target: self, action: #selector(backwardTapResponse))
@@ -176,11 +185,13 @@ class MusicPlayerViewController: UIViewController {
 
 extension MusicPlayerViewController: UIPlayButtonDelegate, UILikeButtonDelegate{
     func likeButtonTapped() {
-        print("User like a track on Music Player")
+        let id = commander.trackList[commander.index].id
+        UserData.shared.addFavoriteTrackId(id: id)
     }
     
     func unlikeButtonTapped() {
-        print("User dislike a track on Music Player")
+       let id = commander.trackList[commander.index].id
+        UserData.shared.removefavoriteTrackById(id: id)
     }
     
     func playButtonTapped() {
