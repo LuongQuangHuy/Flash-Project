@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,7 +34,6 @@
 		283C6BA824B4BC3300856952 /* SearchNavigateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283C6BA624B4BC3300856952 /* SearchNavigateCell.swift */; };
 		283C6BA924B4BC3300856952 /* SearchViewNavigateBarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283C6BA724B4BC3300856952 /* SearchViewNavigateBarCell.xib */; };
 		2886EFE424B10ACB0097DF19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2886EFE324B10ACB0097DF19 /* AppDelegate.swift */; };
-		2886EFE624B10ACB0097DF19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2886EFE524B10ACB0097DF19 /* SceneDelegate.swift */; };
 		2886EFEB24B10ACB0097DF19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2886EFE924B10ACB0097DF19 /* Main.storyboard */; };
 		2886EFED24B10ACC0097DF19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2886EFEC24B10ACC0097DF19 /* Assets.xcassets */; };
 		2886EFF024B10ACC0097DF19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2886EFEE24B10ACC0097DF19 /* LaunchScreen.storyboard */; };
@@ -57,6 +56,9 @@
 		28EC64DB24B93E3800EDA28D /* DetailArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EC64DA24B93E3800EDA28D /* DetailArtistViewController.swift */; };
 		28EC64DD24B93E5800EDA28D /* DetailAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EC64DC24B93E5800EDA28D /* DetailAlbumViewController.swift */; };
 		D05B9AF9F95789A4F641FDC5 /* Pods_FlashProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9701F24057EC2D955FEE0B6 /* Pods_FlashProject.framework */; };
+		E248A42824D3DE5B00F1F6A0 /* Artist_Album_detailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248A42624D3DE5B00F1F6A0 /* Artist_Album_detailView.swift */; };
+		E248A42924D3DE5B00F1F6A0 /* Artist_Album_detailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E248A42724D3DE5B00F1F6A0 /* Artist_Album_detailView.xib */; };
+		E248A42B24D400A500F1F6A0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248A42A24D400A500F1F6A0 /* UserInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,7 +94,6 @@
 		283C6BA724B4BC3300856952 /* SearchViewNavigateBarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewNavigateBarCell.xib; sourceTree = "<group>"; };
 		2886EFE024B10ACB0097DF19 /* FlashProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2886EFE324B10ACB0097DF19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2886EFE524B10ACB0097DF19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2886EFEA24B10ACB0097DF19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2886EFEC24B10ACC0097DF19 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2886EFEF24B10ACC0097DF19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,6 +116,9 @@
 		28EC64D824B92AC900EDA28D /* ArtistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewController.swift; sourceTree = "<group>"; };
 		28EC64DA24B93E3800EDA28D /* DetailArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArtistViewController.swift; sourceTree = "<group>"; };
 		28EC64DC24B93E5800EDA28D /* DetailAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAlbumViewController.swift; sourceTree = "<group>"; };
+		E248A42624D3DE5B00F1F6A0 /* Artist_Album_detailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist_Album_detailView.swift; sourceTree = "<group>"; };
+		E248A42724D3DE5B00F1F6A0 /* Artist_Album_detailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Artist_Album_detailView.xib; sourceTree = "<group>"; };
+		E248A42A24D400A500F1F6A0 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		E9701F24057EC2D955FEE0B6 /* Pods_FlashProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlashProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -153,6 +157,7 @@
 				2818902024B39B80008C0447 /* Data Models.swift */,
 				2800FA8524BFDA1600645E23 /* MusicPlayer.swift */,
 				2800FA8724BFE51700645E23 /* CommunicationWithAPI.swift */,
+				E248A42A24D400A500F1F6A0 /* UserInfo.swift */,
 				2800FA8F24C0107A00645E23 /* Caculating.swift */,
 			);
 			path = Model;
@@ -197,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				2886EFE324B10ACB0097DF19 /* AppDelegate.swift */,
-				2886EFE524B10ACB0097DF19 /* SceneDelegate.swift */,
 				2886EFF724B10AF00097DF19 /* View Controllers */,
 				2818900A24B38F99008C0447 /* Cells */,
 				2886EFF824B10B0E0097DF19 /* Resources */,
@@ -267,6 +271,8 @@
 				28CC2F8624BBD92F003DFB81 /* UserInfoView.xib */,
 				28BBFCB524BC9B260072B4E2 /* LogOutFooterView.swift */,
 				28BBFCB624BC9B260072B4E2 /* LogOutFooterView.xib */,
+				E248A42624D3DE5B00F1F6A0 /* Artist_Album_detailView.swift */,
+				E248A42724D3DE5B00F1F6A0 /* Artist_Album_detailView.xib */,
 			);
 			path = "Header Footer Views";
 			sourceTree = "<group>";
@@ -299,7 +305,7 @@
 				2886EFDC24B10ACB0097DF19 /* Sources */,
 				2886EFDD24B10ACB0097DF19 /* Frameworks */,
 				2886EFDE24B10ACB0097DF19 /* Resources */,
-				5E5DFB8D4F9D8C71701C2B03 /* [CP] Embed Pods Frameworks */,
+				992E91A8578D91E5DD72194E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -348,6 +354,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E248A42924D3DE5B00F1F6A0 /* Artist_Album_detailView.xib in Resources */,
 				2818901C24B395FC008C0447 /* AlbumSearchResultCell.xib in Resources */,
 				28EC64CF24B91BEE00EDA28D /* FavoriteThemeCell.xib in Resources */,
 				28310B9E24B6506E00A3E548 /* MusicAlbumCell.xib in Resources */,
@@ -368,23 +375,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5E5DFB8D4F9D8C71701C2B03 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FlashProject/Pods-FlashProject-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FlashProject/Pods-FlashProject-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlashProject/Pods-FlashProject-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6D1B4048E1F67B9F66A4D2A1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -407,6 +397,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		992E91A8578D91E5DD72194E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlashProject/Pods-FlashProject-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlashProject/Pods-FlashProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -420,6 +432,7 @@
 				2818900124B38AE8008C0447 /* SearchViewController.swift in Sources */,
 				2818902124B39B80008C0447 /* Data Models.swift in Sources */,
 				28BBFCBA24BCA10A0072B4E2 /* UserAccountTableViewController.swift in Sources */,
+				E248A42824D3DE5B00F1F6A0 /* Artist_Album_detailView.swift in Sources */,
 				28EC64D724B92A8700EDA28D /* AlbumsViewController.swift in Sources */,
 				2818900324B38B0A008C0447 /* FavoritesViewController.swift in Sources */,
 				28310BA524B67BEF00A3E548 /* HeaderMusicView.swift in Sources */,
@@ -429,6 +442,7 @@
 				2818901724B3936C008C0447 /* ArtistSearchResultCell.swift in Sources */,
 				2800FA8824BFE51700645E23 /* CommunicationWithAPI.swift in Sources */,
 				28EB7B6624BE9F000046B172 /* DetailMPmenuTableViewController.swift in Sources */,
+				E248A42B24D400A500F1F6A0 /* UserInfo.swift in Sources */,
 				2818901B24B395FC008C0447 /* AlbumSearchResultCell.swift in Sources */,
 				28310B9D24B6506E00A3E548 /* MusicAlbumCell.swift in Sources */,
 				28EC64D924B92AC900EDA28D /* ArtistsViewController.swift in Sources */,
@@ -441,7 +455,6 @@
 				28EC64D124B929F000EDA28D /* FavoriteTracksViewController.swift in Sources */,
 				28EC64DD24B93E5800EDA28D /* DetailAlbumViewController.swift in Sources */,
 				28EB7B6424BE8F660046B172 /* MusicPlayerViewController.swift in Sources */,
-				2886EFE624B10ACB0097DF19 /* SceneDelegate.swift in Sources */,
 				283C6BA824B4BC3300856952 /* SearchNavigateCell.swift in Sources */,
 				2818900D24B38FF6008C0447 /* TrackSearchResultCell.swift in Sources */,
 				28310BA124B655F100A3E548 /* MusicCollectionView.swift in Sources */,
@@ -524,13 +537,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -578,12 +592,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -595,13 +610,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = FlashProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = lqh.FlashProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -613,13 +629,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = FlashProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = lqh.FlashProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

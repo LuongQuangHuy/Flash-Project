@@ -6,5 +6,5 @@ target 'FlashProject' do
   use_frameworks!
 
   # Pods for FlashProject
-	pod 'Kingfisher', '~> 5.0'
+	pod 'Kingfisher', '~> 4.2'
 end

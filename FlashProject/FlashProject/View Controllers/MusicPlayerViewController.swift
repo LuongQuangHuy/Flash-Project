@@ -26,7 +26,7 @@ class MusicPlayerViewController: UIViewController {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var endTime: UILabel!
-    let likeButton = UILikeButton(frame: .zero, originState: .unlike, unlikeImageName: "icons8-heart-32", likedImageName: "icons8-whiteheart-32")
+    let likeButton = UILikeButton(frame: .zero, originState: .unlike, unlikeImageName: "icons8-whiteheart-32", likedImageName: "icons8-redheart-50")
     let playButton = UIPlayButton(frame: .zero, originState: .pause, playImageName: "icons8-play-white-50", pauseImageName: "icons8-pause-white-50")
     
     unowned let commander: MusicPlayer = MusicPlayer.shared
@@ -60,6 +60,7 @@ class MusicPlayerViewController: UIViewController {
         likeButton.centerXAnchor.constraint(equalTo: likeButtonFrame.centerXAnchor).isActive = true
         likeButton.centerYAnchor.constraint(equalTo: likeButtonFrame.centerYAnchor).isActive = true
         likeButton.likeButtonDelegate = self
+        
         
         //layout play button
         playButtonFrame.addSubview(playButton)
@@ -100,7 +101,7 @@ class MusicPlayerViewController: UIViewController {
     
     //action for buttons
     @objc func menuTapResponse(){
-        let detailView = storyboard?.instantiateViewController(identifier: "DetailMPmenuVC") as! DetailMPmenuTableViewController
+        let detailView = storyboard?.instantiateViewController(withIdentifier: "DetailMPmenuVC") as! DetailMPmenuTableViewController
         detailView.modalPresentationStyle = .popover
         present(detailView, animated: true, completion: nil)
     }

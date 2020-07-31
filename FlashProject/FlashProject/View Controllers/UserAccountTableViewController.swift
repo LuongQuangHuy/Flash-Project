@@ -28,7 +28,7 @@ class UserAccountTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            let manageAccountVC = storyboard?.instantiateViewController(identifier: "ManageAccountVC") as! ManageAccountTableViewController
+            let manageAccountVC = storyboard?.instantiateViewController(withIdentifier: "ManageAccountVC") as! ManageAccountTableViewController
             self.navigationController?.pushViewController(manageAccountVC, animated: true)
         }
     }
@@ -47,9 +47,9 @@ class UserAccountTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = Bundle.main.loadNibNamed("UserInfoView", owner: self, options: nil)?.first as! UserInfoView
-        header.userName.text = "Luong Quang Huy"
-        header.userEmailAddress.text = "tromchobacninh@gmail.com"
-        header.userID.text = "User ID: 1234567890"
+        header.userName.text = UserData.shared.userInfo?.name
+        header.userEmailAddress.text = UserData.shared.userInfo?.email
+        header.userID.text = UserData.shared.userInfo?.userID
         return header
     }
     

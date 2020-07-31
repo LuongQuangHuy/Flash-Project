@@ -34,7 +34,7 @@ class ManageAccountTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = .systemGroupedBackground
+        view.backgroundColor = .white
         return view
     }
 
@@ -44,7 +44,7 @@ class ManageAccountTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = .systemGroupedBackground
+        view.backgroundColor = .white
         return view
     }
     

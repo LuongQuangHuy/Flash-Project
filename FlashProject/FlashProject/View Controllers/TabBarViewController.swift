@@ -12,7 +12,7 @@ class TabBarViewController: UITabBarController{
     
     let minimizeMusicPlayerView : UIView = {
         let view = UIView()
-        view.backgroundColor = .systemPurple
+        view.backgroundColor = UIColor.purple
         return view
     }()
     let stackView: UIStackView = {
@@ -42,7 +42,7 @@ class TabBarViewController: UITabBarController{
     let progressBar: UIProgressView = {
         let progress = UIProgressView()
         progress.progressTintColor = .white
-        progress.trackTintColor = .systemPurple
+        progress.trackTintColor = .purple
         progress.progress = 0.5
         return progress
     }()

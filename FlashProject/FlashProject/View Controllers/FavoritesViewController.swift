@@ -9,7 +9,7 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
-
+    var historyTracks: [Track] = []
     @IBOutlet weak var tableView: UITableView!
     private struct SectionInfo{
         enum SectionCellType{
@@ -36,13 +36,46 @@ class FavoritesViewController: UIViewController {
         return collectionView
     }()
     
+    var collectionView: UICollectionView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
         configureNavigationBar()
         tableViewRegister()
         tableViewConfigureSection()
+        addobserver()
     }
+    
+    func addobserver(){
+         let historyTrackChanged = Notification.Name.init("historyTrackChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadHistoryData), name: historyTrackChanged, object: UserData.shared)
+        let likedTrackChanged = Notification.Name.init("likedTrackChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTracksNumberCount), name: likedTrackChanged, object: UserData.shared)
+        let likedAlbumChanged = Notification.Name.init("likedAlbumChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadAlbumsNumberCount), name: likedAlbumChanged, object: UserData.shared)
+        let likedArtistChanged = Notification.Name.init("likedArtistChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadArtistNumberCount), name: likedArtistChanged, object: UserData.shared)
+        
+        
+    }
+    
+    @objc func reloadHistoryData(){
+        self.collectionView?.reloadData()
+    }
+    
+    @objc func reloadTracksNumberCount(){
+        tableViewConfigureSection()
+    }
+    
+    @objc func reloadAlbumsNumberCount(){
+        tableViewConfigureSection()
+    }
+    
+    @objc func reloadArtistNumberCount(){
+        tableViewConfigureSection()
+    }
+    
     func configureNavigationBar(){
         self.title = "Favorites"
         self.navigationController?.navigationBar.prefersLargeTitles = true
@@ -59,27 +92,38 @@ class FavoritesViewController: UIViewController {
         //configure history section
         let historySection = SectionInfo(type: .History, titleHeader: "Recently Played", themes: nil , heightForRowInSection: 200)
         // configure themes section
-        let favoriteTracks = Theme(themeTitle: "Favorite Tracks", count: 0) {
+        let favoriteTracks = Theme(themeTitle: "Favorite Tracks", count: UserData.shared.userStoreData?.userLikedTrackIDs.count ?? 0) {
             [unowned self] () -> Void in
-            if let favoriteTracksVC = self.storyboard?.instantiateViewController(identifier: "FavoriteTracksViewController") as? FavoriteTracksViewController{
+            if let favoriteTracksVC = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteTracksViewController") as? FavoriteTracksViewController{
                 self.navigationController?.pushViewController(favoriteTracksVC, animated: true)
             }
         }
-        let albums = Theme(themeTitle: "Albums", count: 0) {
+        let albums = Theme(themeTitle: "Albums", count: UserData.shared.userStoreData?.userLikedAlbumIDs.count ?? 0) {
             [unowned self] () -> Void in
-            if let albumsVC = self.storyboard?.instantiateViewController(identifier: "AlbumsViewController") as? AlbumsViewController{
+            if let albumsVC = self.storyboard?.instantiateViewController(withIdentifier: "AlbumsViewController") as? AlbumsViewController{
                 self.navigationController?.pushViewController(albumsVC, animated: true)
             }
         }
-        let artists = Theme(themeTitle: "Artists", count: 0) {
+        let artists = Theme(themeTitle: "Artists", count: UserData.shared.userStoreData?.userLikedArtistIDs.count ?? 0) {
             [unowned self] () -> Void in
-            if let artistsVC = self.storyboard?.instantiateViewController(identifier: "ArtistsViewController") as? ArtistsViewController{
+            if let artistsVC = self.storyboard?.instantiateViewController(withIdentifier: "ArtistsViewController") as? ArtistsViewController{
                 self.navigationController?.pushViewController(artistsVC, animated: true)
             }
         }
         let themesSection = SectionInfo(type: .Themes, titleHeader: "", themes: [favoriteTracks, albums, artists], heightForRowInSection: 80)
         sectionInfo.append(historySection)
         sectionInfo.append(themesSection)
+    }
+    
+    deinit {
+        let historyTrackChanged = Notification.Name.init("historyTrackChanged")
+        NotificationCenter.default.removeObserver(self, name: historyTrackChanged, object: UserData.shared)
+        let likedTrackChanged = Notification.Name.init("likedTrackChanged")
+        NotificationCenter.default.removeObserver(self, name: likedTrackChanged, object: UserData.shared)
+        let likedAlbumChanged = Notification.Name.init("likedAlbumChanged")
+        NotificationCenter.default.removeObserver(self, name: likedAlbumChanged, object: UserData.shared)
+        let likedArtistChanged = Notification.Name.init("likedArtistChanged")
+        NotificationCenter.default.removeObserver(self, name: likedArtistChanged, object: UserData.shared)
     }
 }
 
@@ -99,6 +143,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryView") as! MusicCollectionView
             cell.collectionView.delegate = self
             cell.collectionView.dataSource = self
+            self.collectionView = cell.collectionView
             return cell
         case .Themes:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ThemeCell") as! FavoriteThemeCell
@@ -141,13 +186,28 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource{
 extension FavoritesViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return UserData.shared.userStoreData?.historyTrackIDs.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionViewForRegister.dequeueReusableCell(withReuseIdentifier: "RecentlyPlayedCell", for: indexPath) as! RecentlyPlayedCell
-        cell.playButton.playButtonDelegate = self
+        let getHistoryTrackById = CommunicateWithAPI()
+        guard let trackId = UserData.shared.userStoreData?.historyTrackIDs[indexPath.item] else {return UICollectionViewCell()}
+        getHistoryTrackById.getTrackById(id: trackId) {
+            guard let track = getHistoryTrackById.track else {return}
+            self.historyTracks.append(track)
+            let url = URL(string: track.album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
+            cell.avatar.kf.setImage(with: url)
+            cell.trackTitle.text = track.title
+            cell.artistName.text = track.artist.name
+            self.tableView.reloadData()
+        }
         return cell
+            
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: [self.historyTracks[indexPath.item]])
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -156,13 +216,3 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout, UICollect
     
 }
 
-extension FavoritesViewController: UIPlayButtonDelegate{
-    func playButtonTapped() {
-        print("a history track on play")
-    }
-    
-    func pauseButtonTapped() {
-        print("a history track on pause")
-    }
-    
-}

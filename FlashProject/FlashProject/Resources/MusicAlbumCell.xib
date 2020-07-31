@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,14 +25,6 @@
                             <constraint firstAttribute="height" constant="180" id="uR3-lU-E25"/>
                         </constraints>
                     </imageView>
-                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afq-Oj-tr8">
-                        <rect key="frame" x="107" y="66" width="48" height="48"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="48" id="Fnn-fR-Pfd"/>
-                            <constraint firstAttribute="width" constant="48" id="hEP-oz-Z0H"/>
-                        </constraints>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmu-3i-lN1">
                         <rect key="frame" x="0.0" y="190" width="262" height="21.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -40,11 +35,9 @@
             </view>
             <constraints>
                 <constraint firstItem="tD4-eT-Kgg" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="94C-fz-lrK"/>
-                <constraint firstItem="afq-Oj-tr8" firstAttribute="centerX" secondItem="tD4-eT-Kgg" secondAttribute="centerX" id="CXS-7P-NoX"/>
                 <constraint firstItem="tD4-eT-Kgg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Dxd-oU-Gaq"/>
                 <constraint firstItem="xmu-3i-lN1" firstAttribute="top" secondItem="tD4-eT-Kgg" secondAttribute="bottom" constant="10" id="FCR-jp-xKv"/>
                 <constraint firstItem="xmu-3i-lN1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ajT-Ne-g2P"/>
-                <constraint firstItem="afq-Oj-tr8" firstAttribute="centerY" secondItem="tD4-eT-Kgg" secondAttribute="centerY" id="nlg-1C-LXj"/>
                 <constraint firstAttribute="trailing" secondItem="xmu-3i-lN1" secondAttribute="trailing" id="xyu-25-Wi5"/>
                 <constraint firstAttribute="trailing" secondItem="tD4-eT-Kgg" secondAttribute="trailing" id="zqC-TS-jcT"/>
             </constraints>
@@ -53,7 +46,6 @@
             <connections>
                 <outlet property="albumAvatar" destination="tD4-eT-Kgg" id="9nd-pE-pao"/>
                 <outlet property="albumTitle" destination="xmu-3i-lN1" id="lcY-jG-cL8"/>
-                <outlet property="playButtonFrame" destination="afq-Oj-tr8" id="ZeT-Lp-E6W"/>
             </connections>
             <point key="canvasLocation" x="169.56521739130437" y="113.50446428571428"/>
         </collectionViewCell>

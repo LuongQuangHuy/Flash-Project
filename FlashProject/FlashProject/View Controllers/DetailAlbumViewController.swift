@@ -7,46 +7,63 @@
 //
 
 import UIKit
-
+import Kingfisher
 class DetailAlbumViewController: UIViewController {
     var trackList: [Track]?
-    var albumId: Int!
+    var link: String?
+    var imageURL: URL?
     @IBOutlet weak var tableView: UITableView!
     let likeButton = UILikeButton(frame: .zero, originState: .unlike, unlikeImageName: "icons8-heart-50", likedImageName: "icons8-redheart-50")
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableView()
-        layoutSubviews()
     }
+    
+    override func loadView(){
+        super.loadView()
+        if let link = self.link{
+            let getAlbumTracks = CommunicateWithAPI()
+            getAlbumTracks.getTrackListByLink(link: link){
+                self.trackList = getAlbumTracks.trackList
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     
     func registerTableView(){
         tableView.register(UINib(nibName: "TrackSearchResultCell", bundle: nil), forCellReuseIdentifier: "TrackCell")
-    }
-    
-    func layoutSubviews(){
-      
-        
     }
 }
 
 extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.trackList?.count ?? 0
+        if section == 0 {
+            return 0
+        }else{
+            return trackList?.count ?? 0
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let data = self.trackList?[indexPath.row]{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-            cell.likeButton.likeButtonDelegate = self
-            cell.track_title.text = data.title
-            cell.artist_album.text = data.artist.name
-            let url = URL(string: data.album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
-            cell.avatar.kf.setImage(with: url)
-            return cell
-        }else{
-            return UITableViewCell()
+        if indexPath.section == 1{
+            if let data = trackList?[indexPath.row]{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
+                cell.likeButton.likeButtonDelegate = self
+                cell.track_title.text = data.title
+                cell.artist_album.text = data.artist.name
+                let url = URL(string:data.album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
+                cell.avatar.kf.setImage(with: url)
+                return cell
+            }else{
+                return UITableViewCell()
+            }
         }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -58,14 +75,34 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
         return 80
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        if section == 0{
+            return 360
+        }else{
+            return 60
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = Bundle.main.loadNibNamed("HeaderMusicView", owner: self, options: nil)?.first as! HeaderMusicView
-        header.headerTitle.text = "Album tracks"
-        header.headerDescription.text = ""
-        return header as UIView
+        if section == 0{
+            let detailArtistView = Bundle.main.loadNibNamed("Artist_Album_detailView", owner: self, options: nil)?.first as! Artist_Album_detailView
+            guard let trackList = trackList , !trackList.isEmpty else {return UIView()}
+            detailArtistView.avatar.kf.setImage(with: self.imageURL)
+            detailArtistView.playButton.setTitle("PLAY ALBUM MIX", for: .normal)
+            detailArtistView.likeButton.likeButtonDelegate = self
+            detailArtistView.playButtonAction = {
+                [weak self]() -> Void in
+                guard let strongSelf = self else {return}
+                if let trackList = strongSelf.trackList{
+                    MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: trackList)
+                }
+            }
+            return detailArtistView as UIView
+        }else{
+            let header = Bundle.main.loadNibNamed("HeaderMusicView", owner: self, options: nil)?.first as! HeaderMusicView
+            header.headerTitle.text = "Top tracks"
+            header.headerDescription.text = ""
+            return header as UIView
+        }
     }
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 // Custom Play Button
-protocol UIPlayButtonDelegate: UIViewController{
+protocol UIPlayButtonDelegate: AnyObject{
     func playButtonTapped()
     func pauseButtonTapped()
 }

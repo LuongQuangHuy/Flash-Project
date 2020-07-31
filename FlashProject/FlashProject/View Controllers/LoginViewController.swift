@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     
 
     @IBAction func loginTapped(_ sender: Any) {
-        guard let tabBarVC = storyboard?.instantiateViewController(identifier: "TabBarViewController") else {return}
+        guard let tabBarVC = storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else {return}
         tabBarVC.modalPresentationStyle = .fullScreen
         present(tabBarVC, animated: true, completion: nil)
     }

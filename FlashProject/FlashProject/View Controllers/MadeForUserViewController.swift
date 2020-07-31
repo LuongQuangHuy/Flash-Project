@@ -9,6 +9,8 @@
 import UIKit
 
 class MadeForUserViewController: UIViewController {
+    var albums: [Album]?
+    var tracks: [Track]?
     private struct SectionInfo{
         enum CellType{
             case Track
@@ -26,6 +28,9 @@ class MadeForUserViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return collectionView
     }()
+
+    var collectionView: UICollectionView?
+    
     private var themes: [SectionInfo] = []
     
     @IBOutlet weak var tableView: UITableView!
@@ -34,6 +39,19 @@ class MadeForUserViewController: UIViewController {
         configureThemes()
         configureNavigationBar()
         tableviewRegister()
+        addObserver()
+    }
+    
+    func addObserver(){
+         let likedArtistChanged = Notification.Name.init("likedArtistChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData(sender:)), name: likedArtistChanged, object: UserData.shared)
+    }
+    
+    @objc func reloadData(sender: Notification){
+        self.albums = UserData.shared.getTop10AlbumsForYou()
+        self.tracks = UserData.shared.getTop10NewTracksForYou()
+        collectionView?.reloadData()
+        self.tableView.reloadData()
     }
     
     func tableviewRegister(){
@@ -43,13 +61,18 @@ class MadeForUserViewController: UIViewController {
     }
     
     func configureThemes(){
-        themes.append(SectionInfo(type: .MusicAlbumView , title: "Latest albums release", description: "According to your favorite artists", numberOfrowInSection: 1 , heightForRowInSection: 570.0))
-        themes.append(SectionInfo(type: .Track , title: "10 latest tracks release", description: "According to your favorite artists", numberOfrowInSection: 10 , heightForRowInSection: 80.0))
+        themes.append(SectionInfo(type: .MusicAlbumView , title: "Latest albums release", description: "According to your favorite artists", numberOfrowInSection: self.albums?.count ?? 0 , heightForRowInSection: 570.0))
+        themes.append(SectionInfo(type: .Track , title: "10 latest tracks release", description: "According to your favorite artists", numberOfrowInSection: self.tracks?.count ?? 0 , heightForRowInSection: 80.0))
     }
     
     func configureNavigationBar(){
         self.title = "Music"
         self.navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    deinit {
+          let likedArtistChanged = Notification.Name.init("likedArtistChanged")
+        NotificationCenter.default.removeObserver(self, name: likedArtistChanged, object: UserData.shared)
     }
 
 
@@ -78,12 +101,13 @@ extension MadeForUserViewController: UITableViewDelegate, UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumsView") as! MusicCollectionView
             cell.collectionView.delegate = self
             cell.collectionView.dataSource = self
+            self.collectionView = cell.collectionView
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        80
+        return 80
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -101,15 +125,18 @@ extension MadeForUserViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionViewForRegister.dequeueReusableCell(withReuseIdentifier: "MusicAlbumCell", for: indexPath) as! MusicAlbumCell
-        cell.playButton.playButtonDelegate = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180.0, height: 270.0)
+        return CGSize(width: 180.0, height: 240.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 14
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 14
     }
     
@@ -124,16 +151,4 @@ extension MadeForUserViewController: UILikeButtonDelegate{
     func unlikeButtonTapped() {
         print("unlike a track from latest tracks release")
     }
-}
-
-extension MadeForUserViewController: UIPlayButtonDelegate{
-    func playButtonTapped() {
-        print("play an album from latest albums release")
-    }
-    
-    func pauseButtonTapped() {
-        print("pause an album form latest albums release")
-    }
-    
-    
 }

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,40 +13,61 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="RecentlyPlayedCell" customModule="FlashProject" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="204" height="175"/>
+            <rect key="frame" x="0.0" y="0.0" width="224" height="299"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="204" height="175"/>
+                <rect key="frame" x="0.0" y="0.0" width="224" height="299"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DOTA2" translatesAutoresizingMaskIntoConstraints="NO" id="zCP-Cu-nnS">
-                        <rect key="frame" x="0.0" y="0.0" width="204" height="175"/>
-                    </imageView>
-                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sHB-TU-RT6">
-                        <rect key="frame" x="10" y="125" width="40" height="40"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <rect key="frame" x="0.0" y="0.0" width="224" height="180"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="D8t-ug-Hl6"/>
-                            <constraint firstAttribute="height" constant="40" id="MwM-P9-ehy"/>
+                            <constraint firstAttribute="height" constant="180" id="yB8-IM-PjM"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRL-m9-V0x">
+                        <rect key="frame" x="0.0" y="180" width="224" height="119"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sV0-RU-VaP">
+                                <rect key="frame" x="8" y="8" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xdy-1x-w7T">
+                                <rect key="frame" x="8" y="41" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sV0-RU-VaP" firstAttribute="top" secondItem="eRL-m9-V0x" secondAttribute="top" constant="8" id="5PB-Ee-cH2"/>
+                            <constraint firstItem="Xdy-1x-w7T" firstAttribute="top" secondItem="sV0-RU-VaP" secondAttribute="bottom" constant="12" id="NCg-JB-gGq"/>
+                            <constraint firstItem="sV0-RU-VaP" firstAttribute="leading" secondItem="eRL-m9-V0x" secondAttribute="leading" constant="8" id="aRz-Ma-2iL"/>
+                            <constraint firstItem="Xdy-1x-w7T" firstAttribute="leading" secondItem="eRL-m9-V0x" secondAttribute="leading" constant="8" id="r8u-g5-guh"/>
                         </constraints>
                     </view>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="zCP-Cu-nnS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="10s-lK-cPM"/>
-                <constraint firstAttribute="trailing" secondItem="zCP-Cu-nnS" secondAttribute="trailing" id="Jhv-52-gX3"/>
-                <constraint firstItem="zCP-Cu-nnS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Tv2-3J-y94"/>
-                <constraint firstAttribute="bottom" secondItem="zCP-Cu-nnS" secondAttribute="bottom" id="edn-gc-ZVp"/>
-                <constraint firstItem="sHB-TU-RT6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="xY0-7a-lEg"/>
-                <constraint firstAttribute="bottom" secondItem="sHB-TU-RT6" secondAttribute="bottom" constant="10" id="zah-iV-PbB"/>
+                <constraint firstItem="zCP-Cu-nnS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="12f-aB-6q7"/>
+                <constraint firstAttribute="trailing" secondItem="eRL-m9-V0x" secondAttribute="trailing" id="LqU-mR-v1N"/>
+                <constraint firstAttribute="trailing" secondItem="zCP-Cu-nnS" secondAttribute="trailing" id="S8d-8e-7NP"/>
+                <constraint firstItem="eRL-m9-V0x" firstAttribute="top" secondItem="zCP-Cu-nnS" secondAttribute="bottom" id="bwL-y9-9XF"/>
+                <constraint firstItem="zCP-Cu-nnS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="gOZ-kw-oJo"/>
+                <constraint firstAttribute="bottom" secondItem="eRL-m9-V0x" secondAttribute="bottom" id="oGx-V2-p0o"/>
+                <constraint firstItem="eRL-m9-V0x" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="wC6-4X-rMG"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="204" height="175"/>
+            <size key="customSize" width="224" height="299"/>
             <connections>
+                <outlet property="artistName" destination="Xdy-1x-w7T" id="CBm-ss-M6Q"/>
                 <outlet property="avatar" destination="zCP-Cu-nnS" id="g2l-jW-AzA"/>
-                <outlet property="buttonFrame" destination="sHB-TU-RT6" id="CoY-13-BAA"/>
+                <outlet property="trackTitle" destination="sV0-RU-VaP" id="3yq-32-KU3"/>
             </connections>
-            <point key="canvasLocation" x="160.86956521739131" y="130.24553571428572"/>
+            <point key="canvasLocation" x="185.50724637681162" y="171.76339285714286"/>
         </collectionViewCell>
     </objects>
     <resources>

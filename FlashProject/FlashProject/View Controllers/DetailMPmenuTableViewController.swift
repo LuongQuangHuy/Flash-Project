@@ -33,7 +33,7 @@ class DetailMPmenuTableViewController: UITableViewController {
         header.likeButton.removeFromSuperview()
         header.track_title.textColor = .white
         header.artist_album.textColor = .white
-        header.contentView.backgroundColor = UIColor.systemPurple
+        header.contentView.backgroundColor = UIColor.purple
         return header
     }
     

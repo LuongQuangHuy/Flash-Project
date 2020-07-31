@@ -63,7 +63,7 @@ class SearchViewController: UIViewController {
     let loadingView : UIView = {
         let loadingView = UIView()
         loadingView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let indicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+        let indicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
         //layout activity indicator view
         loadingView.addSubview(indicatorView)
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -205,13 +205,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.layer.borderWidth = 1.0
         cell.layer.cornerRadius = 15.0
         if data.type == self.typeState{
-            cell.backgroundColor = UIColor.systemPurple
+            cell.backgroundColor = UIColor.purple
             cell.label.textColor = .white
             cell.layer.borderColor = UIColor.white.cgColor
         }else{
             cell.backgroundColor = UIColor.white
-            cell.label.textColor = .systemPurple
-            cell.layer.borderColor = UIColor.systemPurple.cgColor
+            cell.label.textColor = UIColor.purple
+            cell.layer.borderColor = UIColor.purple.cgColor
         }
         return cell
     }
@@ -313,13 +313,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
             for (index, artist) in resultComponents.artists.enumerated(){
                 if index == indexPath.row{
                     let artistVC = storyboard?.instantiateViewController(withIdentifier: "DetailArtistViewController") as! DetailArtistViewController
-                    artistVC.loadView()
-                    artistVC.viewDidLoad()
-                    let getArtistTracks = CommunicateWithAPI()
-                    getArtistTracks.getTrackListByLink(link: artist.tracklist) {
-                        artistVC.tracklist = getArtistTracks.trackList
-                        artistVC.tableView.reloadData()
-                    }
+                    artistVC.link = artist.tracklist
+                    artistVC.imageURL = URL(string: artist.picture_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
                     self.navigationController?.pushViewController(artistVC, animated: true)
                 }
             }
@@ -327,13 +322,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
             for(index, album) in resultComponents.albums.enumerated(){
                 if index == indexPath.row{
                     let albumVC = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as! DetailAlbumViewController
-                    albumVC.loadView()
-                    albumVC.viewDidLoad()
-                    let getAlbumTracks = CommunicateWithAPI()
-                    getAlbumTracks.getTrackListByLink(link: album.tracklist) {
-                        albumVC.trackList = getAlbumTracks.trackList
-                        albumVC.tableView.reloadData()
-                    }
+                    albumVC.link = album.tracklist
+                    albumVC.imageURL = URL(string: album.cover_xl)
                     self.navigationController?.pushViewController(albumVC, animated: true)
                 }
             }

@@ -9,7 +9,7 @@
 import UIKit
 
 class ArtistsViewController: UIViewController {
-
+    var links: [String?] = []
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,25 @@ class ArtistsViewController: UIViewController {
 
 extension ArtistsViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return UserData.shared.userStoreData?.userLikedArtistIDs.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell") as! ArtistSearchResultCell
         cell.likeButton.likeButtonDelegate = self
+        guard let artistID = UserData.shared.userStoreData?.userLikedArtistIDs[indexPath.row] else {return UITableViewCell()}
+        let getArtistByID = CommunicateWithAPI()
+        getArtistByID.getAlbumById(id: artistID){
+            [weak self]() -> Void in
+            guard let strongSelf = self else {return}
+            let url = URL(string: getArtistByID.artist?.picture_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
+            cell.avatar.kf.setImage(with: url)
+            cell.artistname.text = getArtistByID.artist?.name ?? ""
+            cell.numberOfFans.text = String(getArtistByID.artist?.numberOfFan ?? 0)
+           
+            strongSelf.links.append(getArtistByID.album?.tracklist)
+            strongSelf.tableView.reloadData()
+        }
         return cell
     }
     
@@ -42,8 +55,11 @@ extension ArtistsViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailView = storyboard?.instantiateViewController(identifier: "DetailArtistViewController") as! DetailArtistViewController
-        self.navigationController?.pushViewController(detailView, animated: true)
+        if let link = links[indexPath.row] {
+            let detailView = storyboard?.instantiateViewController(withIdentifier: "DetailArtistViewController") as! DetailArtistViewController
+            detailView.link = link
+            self.navigationController?.pushViewController(detailView, animated: true)
+        }
     }
     
 }

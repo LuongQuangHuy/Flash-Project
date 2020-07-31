@@ -9,7 +9,7 @@
 import UIKit
 
 // Custom Like Button
-protocol UILikeButtonDelegate: UIViewController{
+protocol UILikeButtonDelegate: AnyObject{
     func likeButtonTapped()
     func unlikeButtonTapped()
 }
