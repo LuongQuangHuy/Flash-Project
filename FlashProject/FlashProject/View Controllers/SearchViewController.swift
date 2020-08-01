@@ -320,6 +320,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
                 if index == indexPath.row{
                     let albumVC = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as! DetailAlbumViewController
                     albumVC.link = album.tracklist
+                    albumVC.albumID = album.id
                     albumVC.imageURL = URL(string: album.cover_xl)
                     self.navigationController?.pushViewController(albumVC, animated: true)
                 }

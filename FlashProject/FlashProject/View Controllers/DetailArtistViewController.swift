@@ -21,6 +21,7 @@ class DetailArtistViewController: UIViewController {
             let getArtistTracks = CommunicateWithAPI()
             getArtistTracks.getTrackListByLink(link: link){
                 self.trackList = getArtistTracks.trackList
+                self.reloadDataInSubViews()
                 self.tableView.reloadData()
             }
         }
@@ -29,11 +30,22 @@ class DetailArtistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableView()
-        self.navigationController?.navigationBar.isTranslucent = true
     }
     
     func registerTableView(){
         tableView.register(UINib(nibName: "TrackSearchResultCell", bundle: nil), forCellReuseIdentifier: "TrackCell")
+    }
+    
+    func reloadDataInSubViews(){
+        if let artistId = self.trackList?.first?.artist.id{
+            guard let likedArtistIds = UserData.shared.userStoreData?.userLikedArtistIDs else{return}
+            self.likeButton.updateButtonByState(state: .unlike)
+            for id in likedArtistIds{
+                if artistId == id{
+                    self.likeButton.updateButtonByState(state: .liked)
+                }
+            }
+        }
     }
 
 }
@@ -120,11 +132,15 @@ extension DetailArtistViewController: UIPlayButtonDelegate{
 
 extension DetailArtistViewController: UILikeButtonDelegate{
     func likeButtonTapped() {
-        print("like")
+        if let artistId = self.trackList?.first?.artist.id{
+            UserData.shared.addFavoriteArtistId(id: artistId)
+        }
     }
     
     func unlikeButtonTapped() {
-        print("dislike")
+        if let artistId = self.trackList?.first?.artist.id{
+            UserData.shared.removefavoriteArtistById(id: artistId)
+        }
     }
     
     

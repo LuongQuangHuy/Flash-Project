@@ -19,6 +19,7 @@ class RecentlyPlayedCell: UICollectionViewCell {
     }
     func layoutSubView(){
         //layout avatar
+        contentView.layer.cornerRadius = 5.0
         avatar.layer.cornerRadius = 5.0
     }
 }

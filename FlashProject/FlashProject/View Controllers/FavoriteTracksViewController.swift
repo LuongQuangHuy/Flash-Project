@@ -36,7 +36,8 @@ extension FavoriteTracksViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! TrackSearchResultCell
-        guard let trackID = UserData.shared.userStoreData?.userLikedTrackIDs[indexPath.row] else {return UITableViewCell()}
+        guard let trackIDs = UserData.shared.userStoreData?.userLikedTrackIDs, !trackIDs.isEmpty else {return UITableViewCell()}
+        let trackID = trackIDs[indexPath.row]
         let getTrackByID = CommunicateWithAPI()
         getTrackByID.getTrackById(id: trackID) {
             [weak self]() -> Void in

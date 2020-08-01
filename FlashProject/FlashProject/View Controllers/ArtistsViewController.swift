@@ -33,17 +33,17 @@ extension ArtistsViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell") as! ArtistSearchResultCell
-        guard let artistID = UserData.shared.userStoreData?.userLikedArtistIDs[indexPath.row] else {return UITableViewCell()}
+        guard let artistIDs = UserData.shared.userStoreData?.userLikedArtistIDs, !artistIDs.isEmpty else {return UITableViewCell()}
+        let artistID = artistIDs[indexPath.row]
         let getArtistByID = CommunicateWithAPI()
-        getArtistByID.getAlbumById(id: artistID){
+        getArtistByID.getArtistById(id: artistID){
             [weak self]() -> Void in
             guard let strongSelf = self else {return}
             let url = URL(string: getArtistByID.artist?.picture_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
             cell.avatar.kf.setImage(with: url)
             cell.artistname.text = getArtistByID.artist?.name ?? ""
             cell.numberOfFans.text = String(getArtistByID.artist?.numberOfFan ?? 0)
-           
-            strongSelf.links.append(getArtistByID.album?.tracklist)
+            strongSelf.links.append(getArtistByID.artist?.tracklist)
             strongSelf.tableView.reloadData()
         }
         return cell
@@ -54,7 +54,7 @@ extension ArtistsViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let link = links[indexPath.row] {
+        if let link = self.links[indexPath.row]{
             let detailView = storyboard?.instantiateViewController(withIdentifier: "DetailArtistViewController") as! DetailArtistViewController
             detailView.link = link
             self.navigationController?.pushViewController(detailView, animated: true)

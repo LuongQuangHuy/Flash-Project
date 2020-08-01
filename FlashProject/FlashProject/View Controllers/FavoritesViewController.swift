@@ -9,7 +9,9 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
+    
     var historyTracks: [Track] = []
+    
     @IBOutlet weak var tableView: UITableView!
     private struct SectionInfo{
         enum SectionCellType{
@@ -38,16 +40,20 @@ class FavoritesViewController: UIViewController {
     
     var collectionView: UICollectionView?
     
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
         tableView.separatorStyle = .none
         configureNavigationBar()
         tableViewRegister()
         tableViewConfigureSection()
-        addobserver()
     }
     
-    func addobserver(){
+    override func viewWillAppear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        self.addObservers()
+    }
+    
+    func addObservers(){
          let historyTrackChanged = Notification.Name.init("historyTrackChanged")
         NotificationCenter.default.addObserver(self, selector: #selector(reloadHistoryData), name: historyTrackChanged, object: UserData.shared)
         let likedTrackChanged = Notification.Name.init("likedTrackChanged")
@@ -56,8 +62,6 @@ class FavoritesViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadAlbumsNumberCount), name: likedAlbumChanged, object: UserData.shared)
         let likedArtistChanged = Notification.Name.init("likedArtistChanged")
         NotificationCenter.default.addObserver(self, selector: #selector(reloadArtistNumberCount), name: likedArtistChanged, object: UserData.shared)
-        
-        
     }
     
     @objc func reloadHistoryData(){
@@ -90,7 +94,7 @@ class FavoritesViewController: UIViewController {
     
     func tableViewConfigureSection(){
         //configure history section
-        let historySection = SectionInfo(type: .History, titleHeader: "Recently Played", themes: nil , heightForRowInSection: 200)
+        let historySection = SectionInfo(type: .History, titleHeader: "Recently Played", themes: nil , heightForRowInSection: 250)
         // configure themes section
         let favoriteTracks = Theme(themeTitle: "Favorite Tracks", count: UserData.shared.userStoreData?.userLikedTrackIDs.count ?? 0) {
             [unowned self] () -> Void in
@@ -211,7 +215,7 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180, height: 180)
+        return CGSize(width: 180, height: 230)
     }
     
 }

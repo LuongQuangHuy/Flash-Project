@@ -40,6 +40,10 @@ class MadeForUserViewController: UIViewController {
         configureThemes()
         configureNavigationBar()
         tableviewRegister()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         addObserver()
     }
     
@@ -51,7 +55,7 @@ class MadeForUserViewController: UIViewController {
     @objc func reloadData(sender: Notification){
         self.albums = UserData.shared.getTop10AlbumsForYou()
         self.tracks = UserData.shared.getTop10NewTracksForYou()
-        collectionView?.reloadData()
+        self.collectionView?.reloadData()
         self.tableView.reloadData()
     }
     
@@ -106,6 +110,14 @@ extension MadeForUserViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if themes[indexPath.section].type != .MusicAlbumView{
+            if let track = self.tracks?[indexPath.row]{
+                MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: [track])
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 80
     }
@@ -120,12 +132,25 @@ extension MadeForUserViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension MadeForUserViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.albums?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionViewForRegister.dequeueReusableCell(withReuseIdentifier: "MusicAlbumCell", for: indexPath) as! MusicAlbumCell
+        cell.albumTitle.text = self.albums?[indexPath.row].title
+        let url = URL(string: self.albums?[indexPath.row].cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
+        cell.albumAvatar.kf.setImage(with: url)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let link = albums?[indexPath.item].tracklist {
+            let detailView = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as! DetailAlbumViewController
+            detailView.link = link
+            self.navigationController?.pushViewController(detailView, animated: true)
+        }else{
+            return
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 class DetailAlbumViewController: UIViewController {
     var trackList: [Track]?
+    var albumID: Int?
     var link: String?
     var imageURL: URL?
     @IBOutlet weak var tableView: UITableView!
@@ -25,7 +26,20 @@ class DetailAlbumViewController: UIViewController {
             let getAlbumTracks = CommunicateWithAPI()
             getAlbumTracks.getTrackListByLink(link: link){
                 self.trackList = getAlbumTracks.trackList
+                self.reloadDataInSubViews()
                 self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func reloadDataInSubViews(){
+        if let albumId = trackList?.first?.album?.id{
+            guard let likedAlbumIds = UserData.shared.userStoreData?.userLikedAlbumIDs else{return}
+            self.likeButton.updateButtonByState(state: .unlike)
+            for id in likedAlbumIds{
+                if albumId == id{
+                    self.likeButton.updateButtonByState(state: .liked)
+                }
             }
         }
     }
@@ -83,19 +97,19 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0{
-            let detailArtistView = Bundle.main.loadNibNamed("Artist_Album_detailView", owner: self, options: nil)?.first as! Artist_Album_detailView
+            let detailAlbumView = Bundle.main.loadNibNamed("Artist_Album_detailView", owner: self, options: nil)?.first as! Artist_Album_detailView
             guard let trackList = trackList , !trackList.isEmpty else {return UIView()}
-            detailArtistView.avatar.kf.setImage(with: self.imageURL)
-            detailArtistView.playButton.setTitle("PLAY ALBUM MIX", for: .normal)
-            detailArtistView.likeButton.likeButtonDelegate = self
-            detailArtistView.playButtonAction = {
+            detailAlbumView.avatar.kf.setImage(with: self.imageURL)
+            detailAlbumView.playButton.setTitle("PLAY ALBUM MIX", for: .normal)
+            detailAlbumView.likeButton.likeButtonDelegate = self
+            detailAlbumView.playButtonAction = {
                 [weak self]() -> Void in
                 guard let strongSelf = self else {return}
                 if let trackList = strongSelf.trackList{
                     MusicPlayer.shared.restartMusicPlayerWithTrackList(tracklist: trackList)
                 }
             }
-            return detailArtistView as UIView
+            return detailAlbumView as UIView
         }else{
             let header = Bundle.main.loadNibNamed("HeaderMusicView", owner: self, options: nil)?.first as! HeaderMusicView
             header.headerTitle.text = "Top tracks"
@@ -107,11 +121,15 @@ extension DetailAlbumViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension DetailAlbumViewController: UILikeButtonDelegate{
     func likeButtonTapped() {
-        print("like")
+        if let albumId = self.albumID{
+        UserData.shared.addFavoriteAlbumId(id: albumId)
+        }
     }
     
     func unlikeButtonTapped() {
-        print("dislike")
+        if let albumId = self.albumID{
+            UserData.shared.removefavoriteAlbumById(id: albumId)
+        }
     }
 }
 

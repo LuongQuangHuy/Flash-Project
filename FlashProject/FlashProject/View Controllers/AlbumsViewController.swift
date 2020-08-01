@@ -10,6 +10,7 @@ import UIKit
 
 class AlbumsViewController: UIViewController {
     var links: [String?] = []
+    var albumIdToPass: Int?
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +30,13 @@ class AlbumsViewController: UIViewController {
 
 extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return UserData.shared.userStoreData?.userLikedAlbumIDs.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell") as! AlbumSearchResultCell
-        guard let albumID = UserData.shared.userStoreData?.userLikedAlbumIDs[indexPath.row] else {return UITableViewCell()}
+        guard let albumIDs = UserData.shared.userStoreData?.userLikedAlbumIDs, !albumIDs.isEmpty else {return UITableViewCell()}
+        let albumID = albumIDs[indexPath.row]
         let getAlbumByID = CommunicateWithAPI()
         getAlbumByID.getAlbumById(id: albumID){
             [weak self]() -> Void in
@@ -43,7 +45,8 @@ extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate{
                 cell.avatar.kf.setImage(with: url)
             cell.albumtitle.text = getAlbumByID.album?.title ?? ""
             cell.artistName.text = getAlbumByID.album?.artist.name ?? ""
-           strongSelf.links.append(getAlbumByID.album?.tracklist)
+            strongSelf.albumIdToPass = getAlbumByID.album?.id
+            strongSelf.links.append(getAlbumByID.album?.tracklist)
             strongSelf.tableView.reloadData()
         }
         return cell
@@ -54,9 +57,10 @@ extension AlbumsViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let link = links[indexPath.row] {
+        if let link = self.links[indexPath.row]{
             let detailView = storyboard?.instantiateViewController(withIdentifier: "DetailAlbumViewController") as! DetailAlbumViewController
             detailView.link = link
+            detailView.albumID = self.albumIdToPass
             self.navigationController?.pushViewController(detailView, animated: true)
         }
     }

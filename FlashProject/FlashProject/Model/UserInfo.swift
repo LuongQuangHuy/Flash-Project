@@ -10,7 +10,7 @@ import Foundation
 
 class UserData{
     
-    class UserInfo{
+    struct UserInfo{
         var name: String
         var email: String
         var userID: String
@@ -23,7 +23,7 @@ class UserData{
         }
     }
     
-    class UserStoredData{
+    struct UserStoredData{
         var userLikedTrackIDs: [Int]{
             didSet{
                 let likedTrackChanged = Notification.Name.init("likedTrackChanged")
@@ -61,21 +61,37 @@ class UserData{
     var userStoreData: UserStoredData?
     var userInfo: UserInfo?
     
+    private let likedTrackSemaphore = DispatchSemaphore.init(value: 1)
+    private let likedAlbumSemaphore = DispatchSemaphore.init(value: 1)
+    private let likedArtistSemaphore = DispatchSemaphore.init(value: 1)
+    private let historyTrackSemaphore = DispatchSemaphore.init(value: 1)
+    
     func addFavoriteTrackId(id: Int){
+        self.removefavoriteTrackById(id: id)
+        likedTrackSemaphore.wait()
         self.userStoreData?.userLikedTrackIDs.insert(id, at: 0)
+        likedTrackSemaphore.signal()
     }
     func addFavoriteAlbumId(id: Int){
+        self.removefavoriteAlbumById(id: id)
+        likedAlbumSemaphore.wait()
         self.userStoreData?.userLikedAlbumIDs.insert(id, at: 0)
+        likedAlbumSemaphore.signal()
     }
     func addFavoriteArtistId(id: Int){
+        self.removefavoriteArtistById(id: id)
+        likedArtistSemaphore.wait()
         self.userStoreData?.userLikedArtistIDs.insert(id, at: 0)
+        likedArtistSemaphore.signal()
     }
     
     func removefavoriteTrackById(id: Int){
         if let trackIds = self.userStoreData?.userLikedTrackIDs{
             for (index,_) in trackIds.enumerated(){
                 if trackIds[index] == id{
+                    likedTrackSemaphore.wait()
                    self.userStoreData?.userLikedTrackIDs.remove(at: index)
+                    likedTrackSemaphore.signal()
                 }
             }
         }
@@ -85,7 +101,9 @@ class UserData{
         if let albumIds = self.userStoreData?.userLikedAlbumIDs{
             for (index,_) in albumIds.enumerated(){
                 if albumIds[index] == id{
+                    likedAlbumSemaphore.wait()
                     self.userStoreData?.userLikedAlbumIDs.remove(at: index)
+                    likedAlbumSemaphore.signal()
                 }
             }
         }
@@ -95,15 +113,33 @@ class UserData{
         if let artistIds = self.userStoreData?.userLikedArtistIDs{
             for (index,_) in artistIds.enumerated(){
                 if artistIds[index] == id{
+                    likedArtistSemaphore.wait()
                     self.userStoreData?.userLikedArtistIDs.remove(at: index)
+                    likedArtistSemaphore.signal()
                 }
             }
         }
     }
     
     func addHistoryTrackId(id: Int){
-        if let _ = self.userStoreData?.historyTrackIDs{
-            self.userStoreData?.historyTrackIDs.insert(id, at: 0)
+        if let historyTracks = self.userStoreData?.historyTrackIDs{
+            for (index,trackId) in historyTracks.enumerated(){
+                if trackId == id{
+                    historyTrackSemaphore.wait()
+                    self.userStoreData?.historyTrackIDs.remove(at: index)
+                    historyTrackSemaphore.signal()
+                }
+            }
+            if historyTracks.count >= 10{
+                historyTrackSemaphore.wait()
+                self.userStoreData?.historyTrackIDs.removeLast()
+                self.userStoreData?.historyTrackIDs.insert(id, at: 0)
+                historyTrackSemaphore.signal()
+            }else{
+                historyTrackSemaphore.wait()
+                self.userStoreData?.historyTrackIDs.insert(id, at: 0)
+                historyTrackSemaphore.signal()
+            }
         }
     }
     

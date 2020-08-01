@@ -7,9 +7,7 @@
 //
 
 import UIKit
-
 class MusicCollectionView: UITableViewCell {
-    
     @IBOutlet weak var collectionView: UICollectionView!
     override func awakeFromNib() {
         super.awakeFromNib()

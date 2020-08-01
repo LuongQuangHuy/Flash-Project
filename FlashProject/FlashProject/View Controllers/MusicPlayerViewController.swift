@@ -47,15 +47,6 @@ class MusicPlayerViewController: UIViewController {
                 self.slider.maximumValue = 0.0
                 self.slider.maximumValue = Float(audioPlayer.duration)
                 self.slider.value = Float(audioPlayer.currentTime)
-                if let trackIDs = UserData.shared.userStoreData?.userLikedTrackIDs{
-                    for id in trackIDs{
-                        if self.commander.trackList[self.commander.index].id == id{
-                            self.likeButton.updateButtonByState(state: .liked)
-                        }else{
-                            self.likeButton.updateButtonByState(state: .unlike)
-                        }
-                    }
-                }
             }
         }
     }
@@ -146,6 +137,14 @@ class MusicPlayerViewController: UIViewController {
             self.currentIndex.text = String("\(commander.index + 1) / \(commander.trackList.count)")
             let url = URL(string: commander.trackList[index].album?.cover_xl ?? "https://s3-eu-west-1.amazonaws.com/magnet-wp-avplus/app/uploads/2019/08/21211744/apple-music.jpg")
             self.avatar.kf.setImage(with: url)
+            if let trackIDs = UserData.shared.userStoreData?.userLikedTrackIDs{
+                self.likeButton.updateButtonByState(state: .unlike)
+                for id in trackIDs{
+                    if id == self.commander.trackList[self.commander.index].id{
+                        self.likeButton.updateButtonByState(state: .liked)
+                    }
+                }
+            }
             if commander.trackList.count <= 1{
                 backwardButton.isUserInteractionEnabled = false
                 forwardButton.isUserInteractionEnabled = false
